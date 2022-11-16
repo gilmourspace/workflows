@@ -5,8 +5,6 @@ on:
         secrets:
             DEPLOYSSHSECRET:
                 required: true
-            DEPLOYSSHPUBLICKEY:
-                required: true
 
 jobs:
 
@@ -19,14 +17,9 @@ jobs:
             swift-version: "5.6"
 
       - name: Setup SSH Key
-        run: | 
-            rm -rf ~/.ssh
-            mkdir -m 0700 ~/.ssh
-            echo "${{ secrets.DEPLOYSSHSECRET }}" > ~/.ssh/id_ed25519
-            echo "${{ secrets.DEPLOYSSHPUBLICKEY }}" > ~/.ssh/id_ed25519.pub
-            chmod 0600 ~/.ssh/id_ed25519
-            eval "$(ssh-agent -s)"
-            ssh-add ~/.ssh/id_ed25519
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
       - name: Checkout repo
         uses: actions/checkout@v2
