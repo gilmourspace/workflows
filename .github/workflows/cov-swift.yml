@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: gilmourspace/swift-coverage@main
-        with:
+        - uses: gilmourspace/install-swift@main
+
+        - uses: gilmourspace/swift-coverage@main
+          with:
             ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }}
