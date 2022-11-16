@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  ci-native:
+  linux-native:
     runs-on: GSAT-B-5510
 
     steps:
