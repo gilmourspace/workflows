@@ -74,3 +74,11 @@ jobs:
 
             - name: Release Test
               run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift test -c release
+
+    test-coverage:
+        needs: setup
+        runs-on: macos-12
+        steps:
+            - uses: gilmourspace/swift-coverage@main
+              with:
+                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
