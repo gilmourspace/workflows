@@ -1,0 +1,49 @@
+name: Ubuntu 20.04 Swift Native
+
+on:
+  pull_request:
+    branches: [development, main]
+  push:
+    branches: [development, main]
+
+jobs:
+
+  exec-cross:
+    runs-on: GSAT-B-5510
+
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3.0.2
+        with:
+          path: ./${{ github.event.repository.name }}
+
+      - name: Clear Cache
+        run: |
+            cd ${{ github.event.repository.name }} 
+            swift package purge-cache
+            swift package reset
+            swift package clean
+
+      - name: Debug Build
+        run: |
+            cd ${{ github.event.repository.name }} 
+            swift build -c debug
+
+      - name: Release build
+        run: |
+            cd ${{ github.event.repository.name }} 
+            swift build -c release
+
+      - name: Debug Test
+        run: |
+            cd ${{ github.event.repository.name }} 
+            swift test --enable-code-coverage
+
+      - name: Release Test
+        run: |
+            cd ${{ github.event.repository.name }} 
+            swift test -c release

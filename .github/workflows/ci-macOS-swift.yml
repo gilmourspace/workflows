@@ -1,0 +1,37 @@
+name: MacOS Monterey Swift CI
+
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+    branches: [development, main]
+
+jobs:
+
+  exec-mac-ci:
+    runs-on: macos-12
+
+    steps:
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.6"
+
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      
+      - name: Debug Build
+        run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift build -c debug
+
+      - name: Release build
+        run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift build -c release
+
+      - name: Debug Test
+        run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift test
+
+      - name: Release Test
+        run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift test -c release
