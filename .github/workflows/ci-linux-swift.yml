@@ -24,7 +24,8 @@ jobs:
         needs: setup
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
             - name: Debug Build
               run: swift build -c debug
@@ -33,7 +34,8 @@ jobs:
         needs: setup
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
             - name: Debug Build
             - name: Release Build
@@ -43,7 +45,8 @@ jobs:
         needs: build-debug
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
             - name: Debug Build
             - name: Debug Test
@@ -53,7 +56,8 @@ jobs:
         needs: build-release
         runs-on: ubuntu-20.04
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
             - name: Debug Build
             - name: Release Test
