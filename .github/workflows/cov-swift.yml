@@ -1,12 +1,12 @@
 name: Swift Coverage Test
 
 on:
-  pull_request:
-    branches:
-      - main
-      - development 
-  push:
-    branches: [development, main]
+    workflow_call:
+        secrets:
+            DEPLOYSSHSECRET:
+                required: true
+            DEPLOYSSHPUBLICKEY:
+                required: true
 
 jobs:
 

@@ -1,10 +1,7 @@
 name: Ubuntu 20.04 Swift Native
 
 on:
-  pull_request:
-    branches: [development, main]
-  push:
-    branches: [development, main]
+    workflow_call:
 
 jobs:
 

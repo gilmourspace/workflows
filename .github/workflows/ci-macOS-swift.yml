@@ -1,10 +1,10 @@
 name: MacOS Monterey Swift CI
 
 on:
-  push:
-    branches: [development, main]
-  pull_request:
-    branches: [development, main]
+    workflow_call:
+        secrets:
+            DEPLOYSSHSECRET:
+                required: true
 
 jobs:
 
