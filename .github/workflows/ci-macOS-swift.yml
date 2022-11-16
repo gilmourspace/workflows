@@ -20,13 +20,13 @@ jobs:
               with:
                 ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
-            - name: Checkout repo
-              uses: actions/checkout@v2
-
     build-debug:
         needs: setup
         runs-on: macos-12
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Debug Build
               run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift build -c debug
 
@@ -34,6 +34,9 @@ jobs:
         needs: setup
         runs-on: macos-12
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Release build
               run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift build -c release
 
@@ -41,6 +44,9 @@ jobs:
         needs: build-debug
         runs-on: macos-12
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Debug Test
               run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift test
 
@@ -48,5 +54,8 @@ jobs:
         needs: build-release
         runs-on: macos-12
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Release Test
               run: xcrun --toolchain "/Users/runner/hostedtoolcache/swift-macOS/5.6.3/x64" swift test -c release

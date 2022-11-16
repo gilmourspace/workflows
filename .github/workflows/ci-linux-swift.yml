@@ -20,13 +20,13 @@ jobs:
               with:
                 ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
-            - name: Checkout repo
-              uses: actions/checkout@v2
-
     build-debug:
         needs: setup
         runs-on: ubuntu-20.04
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Debug Build
               run: swift build -c debug
 
@@ -34,6 +34,10 @@ jobs:
         needs: setup
         runs-on: ubuntu-20.04
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Debug Build
             - name: Release Build
               run: swift build -c release
 
@@ -41,6 +45,10 @@ jobs:
         needs: build-debug
         runs-on: ubuntu-20.04
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Debug Build
             - name: Debug Test
               run: swift test --enable-code-coverage
 
@@ -48,5 +56,9 @@ jobs:
         needs: build-release
         runs-on: ubuntu-20.04
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Debug Build
             - name: Release Test
               run: swift test -c release
