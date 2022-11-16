@@ -37,7 +37,6 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            - name: Debug Build
             - name: Release Build
               run: swift build -c release
 
@@ -48,7 +47,6 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            - name: Debug Build
             - name: Debug Test
               run: swift test --enable-code-coverage
 
@@ -59,6 +57,5 @@ jobs:
             - name: Checkout repo
               uses: actions/checkout@v3
 
-            - name: Debug Build
             - name: Release Test
               run: swift test -c release
