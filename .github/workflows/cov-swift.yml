@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: ./.github/workflows/run-cov-swift.yml
+      - uses: ./run-cov-swift

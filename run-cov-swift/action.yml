@@ -5,7 +5,7 @@ runs:
     using: 'composite'
 
     steps:
-      - uses: ./install-swift.yml
+      - uses: ./install-swift
 
       - name: Setup SSH Key
         if: ${{ always() }}
