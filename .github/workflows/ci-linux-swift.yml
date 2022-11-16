@@ -46,7 +46,7 @@ jobs:
               run: swift build -c release
 
     test-debug:
-        needs: build-debug
+        needs: setup
         runs-on: ubuntu-20.04
         steps:
             - name: Setup SSH Key
@@ -61,7 +61,7 @@ jobs:
               run: swift test --enable-code-coverage
 
     test-release:
-        needs: build-release
+        needs: setup
         runs-on: ubuntu-20.04
         steps:
             - name: Setup SSH Key
