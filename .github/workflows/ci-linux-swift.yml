@@ -8,30 +8,54 @@ on:
 
 jobs:
 
-  linux:
-    runs-on: ubuntu-20.04
+    setup:
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: swift-actions/setup-swift@v1
+              with:
+                swift-version: "5.6"
 
-    steps:
-      - uses: swift-actions/setup-swift@v1
-        with:
-            swift-version: "5.6"
+            - name: Setup SSH Key
+              uses: webfactory/ssh-agent@v0.5.4
+              with:
+                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
-      - name: Setup SSH Key
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+    build-debug:
+        needs: setup
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      
-      - name: Debug Build
-        run: swift build -c debug
+            - name: Debug Build
+              run: swift build -c debug
 
-      - name: Release build
-        run: swift build -c release
+    build-release:
+        needs: setup
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
 
-      - name: Debug Test
-        run: swift test --enable-code-coverage
+            - name: Release Build
+              run: swift build -c release
 
-      - name: Release Test
-        run: swift test -c release
+    test-debug:
+        needs: build-debug
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Debug Test
+              run: swift test --enable-code-coverage
+
+    test-release:
+        needs: build-release
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Release Test
+              run: swift test -c release
