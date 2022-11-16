@@ -2,12 +2,9 @@ name: Generate Documentation
 
 on:
     workflow_call:
-        inputs:
-            token:
-                description: The github token.
-                required: true
-                type: string
         secrets:
+            TOKEN:
+                required: true
             DEPLOYSSHSECRET:
                 required: true
 
@@ -38,6 +35,6 @@ jobs:
       - name: Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ inputs.token }}
+          github_token: ${{ secrets.TOKEN }}
           publish_dir: ./docs
           force_orphan: true
