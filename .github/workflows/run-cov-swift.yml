@@ -1,0 +1,39 @@
+name: Swift Coverage Test
+description: Extract test coverage information for a swift package.
+
+runs:
+    using: 'composite'
+
+    steps:
+      - uses: ./install-swift.yml
+
+      - name: Setup SSH Key
+        if: ${{ always() }}
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+
+      - name: Checkout repo
+        if: ${{ always() }}
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        if: ${{ always() }}
+        run: swift test --enable-code-coverage
+
+      - name: Coverage Test
+        if: ${{ always() }}
+        uses: mattpolzin/swift-codecov-action@0.7.3
+        id: cov
+        with:
+          MINIMUM_COVERAGE: 80
+
+      - name: Post Positive Result
+        if: ${{ success() }}
+        run: |
+          echo "::warning file=Package.swift,line=1,col=1::The current code coverage percentage is passing with ${{ steps.cov.outputs.codecov }} (minimum allowed: ${{ steps.cov.outputs.minimum_coverage }}%)."
+
+      - name: Post Negative Result
+        if: ${{ failure() }}
+        run: |
+          echo "::error file=Package.swift,line=1,col=1::The current code coverage percentage is failing with ${{ steps.cov.outputs.codecov }} (minimum allowed: ${{ steps.cov.outputs.minimum_coverage }}%)."
