@@ -2,6 +2,12 @@ name: Ubuntu 20.04 Swift CI
 
 on:
     workflow_call:
+        inputs:
+            swift-version:
+                description: "The swift version to use to build and test the package."
+                required: false
+                type: string
+                default: "5.6.3"
         secrets:
             DEPLOYSSHSECRET:
                 required: true
@@ -11,9 +17,10 @@ jobs:
     setup:
         runs-on: ubuntu-20.04
         steps:
-            - uses: swift-actions/setup-swift@v1
+            - uses: gilmourspace/install-swift@v1
               with:
-                swift-version: "5.6"
+                swift-version: ${{ inputs.swift-version }}
+
 
     build-debug:
         needs: setup
