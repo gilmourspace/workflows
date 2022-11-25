@@ -2,6 +2,12 @@ name: Lint Swift
 
 on:
     workflow_call:
+        inputs:
+            swift-version:
+                description: "The swift version to use when linting the swift package."
+                required: false
+                type: string
+                default: "5.6.3"
 
 jobs:
 
@@ -27,12 +33,12 @@ jobs:
       - name: Install Swift
         uses: swift-actions/setup-swift@v1
         with:
-          swift-version: "5.6"
+          swift-version: ${{ inputs.swift-version }}
 
       - name: Install swift-format
         uses: mipalgu/install-swift-format@main
         with:
-          ref: swift-5.6.3-RELEASE
+          ref: swift-${{ inputs.swift-version }}-RELEASE
 
       - name: SwiftFormat
         run: swift-format lint -rs --configuration .swiftformat.json Sources Tests
