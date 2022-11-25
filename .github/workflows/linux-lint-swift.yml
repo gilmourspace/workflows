@@ -12,7 +12,7 @@ on:
                 description: "The ref to use when checking out swift-format"
                 required: false
                 type: string
-                default: "5.6.3"
+                default: "swift-5.6.3-RELEASE"
 
 jobs:
 
