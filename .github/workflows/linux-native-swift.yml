@@ -15,32 +15,25 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v3.0.2
-        with:
-          path: ./${{ github.event.repository.name }}
 
       - name: Clear Cache
         run: |
-            cd ${{ github.event.repository.name }} 
             swift package purge-cache
             swift package reset
             swift package clean
 
       - name: Debug Build
         run: |
-            cd ${{ github.event.repository.name }} 
             swift build -c debug
 
       - name: Release build
         run: |
-            cd ${{ github.event.repository.name }} 
             swift build -c release
 
       - name: Debug Test
         run: |
-            cd ${{ github.event.repository.name }} 
-            swift test --enable-code-coverage
+            swift test
 
       - name: Release Test
         run: |
-            cd ${{ github.event.repository.name }} 
             swift test -c release
