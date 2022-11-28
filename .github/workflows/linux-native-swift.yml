@@ -18,7 +18,7 @@ jobs:
 
       - name: Clear Cache
         run: |
-            swift package purge-cache
+            swift package purge-cache || true
             swift package reset
             swift package clean
 
