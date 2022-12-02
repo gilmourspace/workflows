@@ -36,6 +36,11 @@ jobs:
         needs: setup
         runs-on: ubuntu-20.04
         steps:
+            - name: Install Packages
+              if: inputs.packages-to-install != ''
+              run: |
+                  sudo apt install -y ${{ inputs.packages-to-install }}
+
             - name: Setup SSH Key
               uses: webfactory/ssh-agent@v0.5.4
               with:
