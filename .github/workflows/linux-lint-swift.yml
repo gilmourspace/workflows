@@ -22,7 +22,6 @@ on:
 jobs:
 
     swiftlint:
-        needs: setup
         runs-on: ubuntu-20.04
         steps:
           - name: Install Packages
@@ -39,7 +38,6 @@ jobs:
                   args: --strict
 
     swiftformat:
-        needs: setup
         runs-on: ubuntu-20.04
         steps:
           - name: Install Packages
