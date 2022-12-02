@@ -33,7 +33,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Clone Repo 
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: SwiftLint
               uses: norio-nomura/action-swiftlint@3.2.1
@@ -45,17 +45,12 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - name: Clone Repo 
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install Swift
-              uses: swift-actions/setup-swift@v1
+              uses: gilmourspace/install-swift@v1
               with:
                   swift-version: ${{ inputs.swift-version }}
-
-            - name: Install swift-format
-              uses: mipalgu/install-swift-format@main
-              with:
-                  ref: ${{ inputs.swift-format-ref }}
 
             - name: SwiftFormat
               run: swift-format lint -rs --configuration .swiftformat.json Sources Tests
