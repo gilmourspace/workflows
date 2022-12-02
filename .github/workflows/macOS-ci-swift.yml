@@ -8,6 +8,11 @@ on:
                 required: false
                 type: string
                 default: "5.6.3"
+            packages-to-install:
+                description: "A list of packages to install before running the workflow."
+                required: false
+                type: string
+                default: ""
         secrets:
             DEPLOYSSHSECRET:
                 required: true
@@ -17,9 +22,14 @@ jobs:
     setup:
         runs-on: macos-12
         steps:
+            - name: Install Packages
+              if: inputs.package-to-install != ''
+              run: |
+                  brew install ${{ inputs.packages-to-install }}
+
             - uses: gilmourspace/install-swift@v1
               with:
-                swift-version: ${{ inputs.swift-version }}
+                  swift-version: ${{ inputs.swift-version }}
 
     build-debug:
         needs: setup
@@ -28,7 +38,7 @@ jobs:
             - name: Setup SSH Key
               uses: webfactory/ssh-agent@v0.5.4
               with:
-                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+                  ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -43,7 +53,7 @@ jobs:
             - name: Setup SSH Key
               uses: webfactory/ssh-agent@v0.5.4
               with:
-                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+                  ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -58,7 +68,7 @@ jobs:
             - name: Setup SSH Key
               uses: webfactory/ssh-agent@v0.5.4
               with:
-                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+                  ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -73,7 +83,7 @@ jobs:
             - name: Setup SSH Key
               uses: webfactory/ssh-agent@v0.5.4
               with:
-                ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+                  ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
             - name: Checkout repo
               uses: actions/checkout@v3

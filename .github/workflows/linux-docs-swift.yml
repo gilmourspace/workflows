@@ -8,6 +8,11 @@ on:
                 required: false
                 type: string
                 default: "5.6.3"
+            packages-to-install:
+                description: "A list of packages to install before running the workflow."
+                required: false
+                type: string
+                default: ""
         secrets:
             TOKEN:
                 required: true
@@ -20,27 +25,32 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: gilmourspace/install-swift@v1
-        with:
-          swift-version: ${{ inputs.swift-version }}
+        - name: Install Packages
+          if: inputs.package-to-install != ''
+          run: |
+              sudo apt install -y ${{ inputs.packages-to-install }}
 
-      - name: Setup SSH Key
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+        - uses: gilmourspace/install-swift@v1
+          with:
+              swift-version: ${{ inputs.swift-version }}
 
-      - name: Clone Repo 
-        uses: actions/checkout@v2
+        - name: Setup SSH Key
+          uses: webfactory/ssh-agent@v0.5.4
+          with:
+              ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
 
-      - name: Generate Documentation
-        uses: mipalgu/swiftpm-generate-documentation@main
-        with:
-            swift-version: ${{ inputs.swift-version }}
-            hosting-base-path: "/"
+        - name: Clone Repo 
+          uses: actions/checkout@v2
 
-      - name: Pages Deployment
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.TOKEN }}
-          publish_dir: ./docs
-          force_orphan: true
+        - name: Generate Documentation
+          uses: mipalgu/swiftpm-generate-documentation@main
+          with:
+              swift-version: ${{ inputs.swift-version }}
+              hosting-base-path: "/"
+
+        - name: Pages Deployment
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+              github_token: ${{ secrets.TOKEN }}
+              publish_dir: ./docs
+              force_orphan: true
