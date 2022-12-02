@@ -24,10 +24,10 @@ jobs:
     swiftlint:
         runs-on: ubuntu-20.04
         steps:
-          - name: Install Packages
-            if: inputs.packages-to-install != ''
-            run: |
-                sudo apt install -y ${{ inputs.packages-to-install }}
+            - name: Install Packages
+              if: inputs.packages-to-install != ''
+              run: |
+                  sudo apt install -y ${{ inputs.packages-to-install }}
 
             - name: Clone Repo 
               uses: actions/checkout@v3
@@ -40,10 +40,10 @@ jobs:
     swiftformat:
         runs-on: ubuntu-20.04
         steps:
-          - name: Install Packages
-            if: inputs.packages-to-install != ''
-            run: |
-                sudo apt install -y ${{ inputs.packages-to-install }}
+            - name: Install Packages
+              if: inputs.packages-to-install != ''
+              run: |
+                  sudo apt install -y ${{ inputs.packages-to-install }}
 
             - name: Clone Repo 
               uses: actions/checkout@v3
