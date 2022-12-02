@@ -26,7 +26,7 @@ jobs:
 
     steps:
         - name: Install Packages
-          if: inputs.package-to-install != ''
+          if: inputs.packages-to-install != ''
           run: |
               sudo apt install -y ${{ inputs.packages-to-install }}
 

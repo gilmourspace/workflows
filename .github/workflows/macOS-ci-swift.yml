@@ -23,7 +23,7 @@ jobs:
         runs-on: macos-12
         steps:
             - name: Install Packages
-              if: inputs.package-to-install != ''
+              if: inputs.packages-to-install != ''
               run: |
                   brew install ${{ inputs.packages-to-install }}
 
