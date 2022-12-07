@@ -52,6 +52,11 @@ jobs:
               uses: gilmourspace/install-swift@v1
               with:
                   swift-version: ${{ inputs.swift-version }}
+            
+            - name: Install swift-format
+              uses: mipalgu/install-swift-format@main
+              with:
+                  ref: ${{ inputs.swift-format-ref }}
 
             - name: SwiftFormat
               run: swift-format lint -rs --configuration .swiftformat.json Sources Tests
