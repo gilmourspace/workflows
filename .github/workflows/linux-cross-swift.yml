@@ -1,0 +1,28 @@
+name: Ubuntu 20.04 Swift Cross Compilation
+
+on:
+    workflow_call:
+
+jobs:
+
+  exec-cross:
+    runs-on: GSAT-B-5510
+
+    steps:
+      
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      #- name: Reconfigure Private Repo URLs
+      #  run: sed -i 's/git@github.com:/https:\/\/${{ secrets.ACCESS_TOKEN }}@github.com\//g' Package.swift
+      
+      - name: Run tests
+        run: |
+            PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
+            scp .build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest runner@petalinux.local:~
+            ssh runner@petalinux.local bash -ic /home/runner/${{ github.event.repository.name}}PackageTests.xctest 
+            ssh runner@petalinux.local rm ${{ github.event.repository.name }}PackageTests.xctest
+
