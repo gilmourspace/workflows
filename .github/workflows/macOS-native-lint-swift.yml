@@ -1,0 +1,31 @@
+name: macOS Swift Native
+
+on:
+    workflow_call:
+
+jobs:
+
+  ci-native:
+    runs-on: cpslab
+
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
+
+      - name: Swiftlint
+        run: |
+            swiftlint
+
+      - name: Swift Format
+        run: |
+          swift-format lint -re --configuration .swift-format.json Sources Tests
