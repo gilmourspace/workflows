@@ -28,8 +28,8 @@ jobs:
         - name: Coverage Test
           id: cov
           run: |
-            cov=swift-test-codecov -p table .build/debug/codecov/*.json | grep ":" | head | cut -d":" -f2 | sed 's/^ //'
-            echo "::set-output name=codecov::$cov"
+            cov=`swift-test-codecov -p table .build/debug/codecov/*.json | grep ":" | head | cut -d":" -f2 | sed 's/^ //'`
+            echo "{codecov}={$cov}" >> $GITHUB_OUTPUT
             [[ cov -gte 80 ]]
 
         - name: Post Positive Result
