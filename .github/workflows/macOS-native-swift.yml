@@ -1,0 +1,39 @@
+name: macOS Swift Native
+
+on:
+    workflow_call:
+
+jobs:
+
+  ci-native:
+    runs-on: cpslab
+
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
+
+      - name: Debug Build
+        run: |
+            swift build -c debug
+
+      - name: Release build
+        run: |
+            swift build -c release
+
+      - name: Debug Test
+        run: |
+            swift test
+
+      - name: Release Test
+        run: |
+            swift test -c release
