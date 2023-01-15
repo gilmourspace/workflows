@@ -22,7 +22,7 @@ on:
 jobs:
 
   docs:
-      uses: ./.github/workflows/linux-github-docs-swift.yml
+      uses: ./.github/workflows/github/linux-github-docs-swift.yml
       with:
           swift-version: ${{ inputs.swift-version }}
           packages-to-install: ${{ inputs.packages-to-install }}
