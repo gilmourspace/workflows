@@ -1,4 +1,4 @@
-name: Linux Swift CI
+name: Generate Documentation
 
 on:
     workflow_call:
@@ -14,11 +14,16 @@ on:
                 type: string
                 default: ""
         secrets:
+            TOKEN:
+                required: true
             DEPLOYSSHSECRET:
                 required: true
 
 jobs:
 
-  ci:
-      uses: ./.github/workflows/linux-native-swift.yml
+  docs:
+      uses: ./.github/workflows/linux-github-docs-swift.yml
+      with:
+          swift-version: ${{ inputs.swift-version }}
+          packages-to-install: ${{ inputs.packages-to-install }}
       secrets: inherit
