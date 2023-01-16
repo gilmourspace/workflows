@@ -9,7 +9,7 @@ defaults:
 
 jobs:
 
-  ci-native:
+  ci:
     runs-on: cpslab
 
     steps:
