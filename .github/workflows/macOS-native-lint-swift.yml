@@ -32,4 +32,4 @@ jobs:
 
       - name: Swift Format
         run: |
-          swift-format lint -re --configuration .swift-format.json Sources Tests
+          swift-format lint -rs --configuration .swiftformat.json Sources Tests
