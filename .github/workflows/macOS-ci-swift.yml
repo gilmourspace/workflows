@@ -20,5 +20,5 @@ on:
 jobs:
 
   ci:
-      uses: ./.github/workflows/native/macOS-native-swift.yml
+      uses: ./.github/workflows/macOS-native-swift.yml
       secrets: inherit
