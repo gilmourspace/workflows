@@ -1,0 +1,31 @@
+name: Ubuntu 20.04 Swift Cross Compilation
+
+on:
+    workflow_call:
+        inputs:
+            runs-on:
+                description: "The device that we should cross-compile for."
+                required: false 
+                type: string
+                default: "cpslab"
+
+jobs:
+
+  exec-cross:
+    runs-on: ${{ inputs.runs-on }}
+
+    steps:
+      
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Debug Test
+        run: |
+            PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
+            scp .build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest runner@arty.local:~
+            ssh runner@arty.local bash -ic /home/runner/${{ github.event.repository.name}}PackageTests.xctest 
+            ssh runner@arty.local rm ${{ github.event.repository.name }}PackageTests.xctest
+
