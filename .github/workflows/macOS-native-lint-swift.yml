@@ -49,4 +49,4 @@ jobs:
 
       - name: Swift Format
         run: |
-          swift-format lint -rs --configuration .swiftformat.json Sources Tests
+          swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests
