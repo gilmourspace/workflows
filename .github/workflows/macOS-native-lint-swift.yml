@@ -10,7 +10,7 @@ defaults:
 jobs:
 
   swiftlint:
-    runs-on: cpslab
+    runs-on: macOS-arm64
 
     steps:
 
