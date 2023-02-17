@@ -3,6 +3,10 @@ name: Ubuntu 20.04 Swift Native
 on:
     workflow_call:
 
+defaults:
+    run:
+        shell: bash -leo pipefail {0}
+
 jobs:
 
   ci:
