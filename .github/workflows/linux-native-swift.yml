@@ -6,7 +6,7 @@ on:
 jobs:
 
   ci:
-    runs-on: GSAT-B-5510
+    runs-on: linux-amd64
 
     steps:
 
