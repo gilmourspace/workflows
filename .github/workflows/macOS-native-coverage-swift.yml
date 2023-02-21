@@ -38,7 +38,7 @@ jobs:
         - name: Coverage Test
           id: cov
           run: |
-            output=`swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table .build/debug/codecov/*.json || true`
+            output=`swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json || true`
             echo "$output"
             cov=`echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g' || true`
             echo "codecov=$cov" >> $GITHUB_OUTPUT
