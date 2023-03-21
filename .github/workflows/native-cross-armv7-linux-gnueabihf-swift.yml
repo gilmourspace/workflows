@@ -27,7 +27,7 @@ jobs:
             swift package clean
 
       - name: Debug Test (Linux host)
-        if: if: ${{ runner.os == 'Linux' }}
+        if: ${{ runner.os == 'Linux' }}
         run: |
             PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
             scp .build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest runner@arty.local:~
