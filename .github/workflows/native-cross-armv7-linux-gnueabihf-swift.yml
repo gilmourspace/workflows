@@ -1,4 +1,4 @@
-name: Linux Swift Cross Compilation
+name: Swift Cross Compilation
 
 on:
     workflow_call:
@@ -26,18 +26,18 @@ jobs:
             swift package reset
             swift package clean
 
-      - name: Debug Test (Linux host)
+      - name: Build Tests (Linux host)
         if: ${{ runner.os == 'Linux' }}
         run: |
             PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
-            scp .build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest runner@arty.local:~
-            ssh runner@arty.local bash -ic /home/runner/${{ github.event.repository.name}}PackageTests.xctest 
-            ssh runner@arty.local rm ${{ github.event.repository.name }}PackageTests.xctest
 
-      - name: Debug Test (macOS host)
+      - name: Build Tests (macOS host)
         if: ${{ runner.os == 'macOS' }}
         run: |
             PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" xcrun --toolchain org.cpslab swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
+
+      - name: Run Tests
+        run: |
             scp .build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest runner@arty.local:~
             ssh runner@arty.local bash -ic /home/runner/${{ github.event.repository.name}}PackageTests.xctest 
             ssh runner@arty.local rm ${{ github.event.repository.name }}PackageTests.xctest
