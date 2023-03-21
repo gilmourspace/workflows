@@ -1,18 +1,16 @@
-name: Ubuntu 20.04 Swift Cross Compilation
+name: Linux Swift Cross Compilation
 
 on:
     workflow_call:
-        inputs:
-            runs-on:
-                description: "The device that we should cross-compile for."
-                required: false 
-                type: string
-                default: "cpslab"
+
+defaults:
+    run:
+        shell: bash -leo pipefail {0}
 
 jobs:
 
   exec-cross:
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: cross-armv7-linux-gnueabihf
 
     steps:
       
@@ -21,6 +19,12 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
 
       - name: Debug Test
         run: |
