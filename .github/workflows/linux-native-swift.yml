@@ -9,9 +9,8 @@ defaults:
 
 jobs:
 
-  ci:
+  debug:
     runs-on: linux-amd64
-
     steps:
 
       - name: Delete Everything
@@ -30,13 +29,29 @@ jobs:
         run: |
             swift build -c debug
 
-      - name: Release build
-        run: |
-            swift build -c release
-
       - name: Debug Test
         run: |
             swift test
+
+  release:
+    runs-on: linux-amd64
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
+
+      - name: Release build
+        run: |
+            swift build -c release
 
       - name: Release Test
         run: |
