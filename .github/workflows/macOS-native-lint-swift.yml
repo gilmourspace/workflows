@@ -28,7 +28,7 @@ jobs:
 
       - name: Swiftlint
         run: |
-            swiftlint
+            swiftlint lint --strict
 
   swiftformat:
     runs-on: macOS-arm64
