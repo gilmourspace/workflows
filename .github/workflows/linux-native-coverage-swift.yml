@@ -1,0 +1,56 @@
+name: Swift Coverage Test
+
+on:
+    workflow_call:
+        inputs:
+            minimum-coverage:
+                description: The minumum code coverage that the package should test.
+                required: false
+                type: number
+                default: 80
+
+defaults:
+    run:
+        shell: bash -leo pipefail {0}
+
+jobs:
+
+  coverage:
+    runs-on: linux-amd64
+
+    steps:
+
+        - name: Delete Everything
+          run: rm -rf *
+
+        - name: Checkout Repository
+          uses: actions/checkout@v3
+
+        - name: Clear Cache
+          run: |
+              swift package purge-cache || true
+              swift package reset
+              swift package clean
+
+        - name: Run tests
+          run: swift test --enable-code-coverage
+
+        - name: Coverage Test
+          id: cov
+          run: |
+            output=`swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json || true`
+            echo "$output"
+            cov=`echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g' || true`
+            echo "codecov=$cov" >> $GITHUB_OUTPUT
+            check=`printf "%.0f" "$cov"`
+            [[ "$check" -ge ${{ inputs.minimum-coverage }} ]]
+
+        - name: Post Positive Result
+          if: ${{ success() }}
+          run: |
+            echo "::warning file=Package.swift,line=1,col=1::The current code coverage percentage is passing with ${{ steps.cov.outputs.codecov }}% (minimum allowed: ${{ inputs.minimum-coverage }}%)."
+
+        - name: Post Negative Result
+          if: ${{ failure() }}
+          run: |
+            echo "::error file=Package.swift,line=1,col=1::The current code coverage percentage is failing with ${{ steps.cov.outputs.codecov }}% (minimum allowed: ${{ inputs.minimum-coverage }}%)."
