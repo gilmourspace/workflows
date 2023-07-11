@@ -1,0 +1,18 @@
+name: Embedded C CI Lint
+
+on:
+    workflow_call:
+        inputs:
+            runs-on:
+                description: "The tag that specifies which runner to execute this workflow on."
+                required: false
+                type: string
+                default: "cross-arm-none-eabi"
+
+jobs:
+
+  ci:
+      uses: ./.github/workflows/native-lint-embedded-c.yml
+      secrets: inherit
+      with:
+          runs-on: ${{ inputs.runs-on }}

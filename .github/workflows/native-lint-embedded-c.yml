@@ -1,0 +1,33 @@
+name: Embedded C Native Lint
+
+on:
+    workflow_call:
+        inputs:
+            runs-on:
+                description: "The tag that specifies which runner to execute this workflow on."
+                required: false
+                type: string
+                default: "cross-arm-none-eabi"
+
+defaults:
+    run:
+        shell: bash -ileo pipefail {0}
+
+jobs:
+
+  cppcheck:
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+            submodules: 'recursive'
+
+      - name: Lint
+        run: |
+            mkdir cfg-cppcheck-build-dir
+            cppcheck --project=cfg.cppcheck
