@@ -1,4 +1,4 @@
-name: Ubuntu 20.04 Swift Native
+name: Embedded C Native
 
 on:
     workflow_call:
