@@ -9,7 +9,7 @@ on:
                 type: string
                 default: "cross-arm-none-eabi"
             project-directory:
-                description: "A relative path from the embedded-cross-framework root directory to the directory containing the project directory".
+                description: "A relative path from the embedded-cross-framework root directory to the directory containing the project directory."
                 required: false
                 type: string
                 default: "projects/bare_metal"
