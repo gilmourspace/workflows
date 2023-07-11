@@ -37,7 +37,7 @@ jobs:
       secrets: inherit
       with:
           runs-on: ${{ inputs.runs-on }}
-          project-directory: ${{ inputs.runs-on }}
+          project-directory: ${{ inputs.project-directory }}
           embedded-cross-framework-ref: ${{ inputs.embedded-cross-framework-ref }}
           embedded-cross-framework-repository: ${{ inputs.embedded-cross-framework-repository }}
           cmake-preset: ${{ inputs.cmake-preset }}
