@@ -59,26 +59,3 @@ jobs:
         run: |
             cmake --preset "${{ inputs.cmake-preset }}-debug" -DPROJECTS="${{ github.event.repository.name }}"
             cmake --build --preset "${{ inputs.cmake-preset }}-debug"
-
-  release:
-    runs-on: ${{ inputs.runs-on }}
-    steps:
-
-      - name: Delete Everything
-        run: rm -rf *
-
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-            repository: ${{ inputs.embedded-cross-framework-repository }}
-            ref: ${{ inputs.embedded-cross-framework-ref }}
-
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-            path: ${{ inputs.project-directory }}
-
-      - name: Build Release
-        run: |
-            cmake --preset "${{ inputs.cmake-preset }}-release" -DPROJECTS="${{ github.event.repository.name }}"
-            cmake --build --preset "${{ inputs.cmake-preset }}-release"
