@@ -52,7 +52,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-            path: ${{ inputs.project-directory }}
+            path: "${{ inputs.project-directory }}/${{ github.event.repository.name }}"
             submodules: 'recursive'
 
       - name: Build Debug
