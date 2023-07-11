@@ -1,0 +1,43 @@
+name: Linux Embedded C CI
+
+
+on:
+    workflow_call:
+        inputs:
+            runs-on:
+                description: "The tag that specifies which runner to execute this workflow on."
+                required: false
+                type: string
+                default: "cross-arm-none-eabi"
+            project-directory:
+                description: "A relative path from the embedded-cross-framework root directory to the directory containing the project directory".
+                required: false
+                type: string
+                default: "projects/bare_metal"
+            embedded-cross-framework-ref:
+                description: "The branch, tag or SHA to checkout when checking out the embedded-cross-framework."
+                required: false
+                type: string
+                default: "main"
+            embedded-cross-framework-repository:
+                description: "The repository to use when cloning the embedded-cross-framework."
+                required: false
+                type: string
+                default: "mipalgu/embedded-cross-framework"
+            cmake-preset:
+                description: "The cmake preset to use when building the project."
+                required: false
+                type: string
+                default: "arm-none-eabi-gcc"
+
+jobs:
+
+  ci:
+      uses: ./.github/workflows/linux-native-embedded-c.yml
+      secrets: inherit
+      with:
+          runs-on: ${{ inputs.runs-on }}
+          project-directory: ${{ inputs.runs-on }}
+          embedded-cross-framework-ref: ${{ inputs.embedded-cross-framework-ref }}
+          embedded-cross-framework-repository: ${{ inputs.embedded-cross-framework-repository }}
+          cmake-preset: ${{ inputs.cmake-preset }}
