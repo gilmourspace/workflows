@@ -47,11 +47,13 @@ jobs:
         with:
             repository: ${{ inputs.embedded-cross-framework-repository }}
             ref: ${{ inputs.embedded-cross-framework-ref }}
+            submodules: 'recursive'
 
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
             path: ${{ inputs.project-directory }}
+            submodules: 'recursive'
 
       - name: Build Debug
         run: |
