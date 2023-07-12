@@ -1,0 +1,47 @@
+name: Generate Documentation
+
+on:
+    workflow_call:
+        inputs:
+            packages-to-install:
+                description: "A list of packages to install before running the workflow."
+                required: false
+                type: string
+                default: ""
+            working-directory:
+                description: "Path of the working directory to change to before running doxygen."
+                required: false
+                type: string
+                default: "."
+            doxyfile-path:
+                description: "Path of the Doxyfile relative to the working directory."
+                required: false
+                type: string
+                default: "./Doxyfile"
+            enable-latex:
+                description: "Flag to enable making of the LaTeX part of the doxygen output."
+                required: false
+                type: boolean
+                default: false
+            additional-packages:
+                description: "Additional Alpine packages to install in the environment (i.e. font packages)."
+                required: false
+                type: string
+                default: ""
+        secrets:
+            TOKEN:
+                required: true
+            DEPLOYSSHSECRET:
+                required: true
+
+jobs:
+
+  docs:
+      uses: ./.github/workflows/linux-github-docs-embedded-c.yml
+      with:
+          packages-to-install: ${{ inputs.packages-to-install }}
+          working-directory: ${{ inputs.working-directory }}
+          doxyfile-path: ${{ inputs.doxyfile-path }}
+          enable-latex: ${{ inputs.enable-latex }}
+          additional-packages: ${{ inputs.additional-packages }}
+      secrets: inherit
