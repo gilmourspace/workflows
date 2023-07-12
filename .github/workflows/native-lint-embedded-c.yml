@@ -30,4 +30,4 @@ jobs:
       - name: Lint
         run: |
             mkdir cfg-cppcheck-build-dir
-            cppcheck --project=cfg.cppcheck --error-exitcode=2 --enable=warning --enable=style --enable=performance --enable=portability
+            cppcheck --project=cfg.cppcheck --error-exitcode=2 --enable=warning --enable=style --enable=performance --enable=portability --suppressions-list=suppressions.txt
