@@ -52,6 +52,8 @@ jobs:
 
         - name: Clone Repo 
           uses: actions/checkout@v3
+          with:
+              submodules: 'recursive'
 
         - name: Generate Documentation
           uses: mattnotmitt/doxygen-action@v1.9.5
