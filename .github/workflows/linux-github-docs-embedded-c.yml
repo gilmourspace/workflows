@@ -1,0 +1,68 @@
+name: Generate Documentation
+
+on:
+    workflow_call:
+        inputs:
+            packages-to-install:
+                description: "A list of packages to install before running the workflow."
+                required: false
+                type: string
+                default: ""
+            working-directory:
+                description: "Path of the working directory to change to before running doxygen."
+                required: false
+                type: string
+                default: "."
+            doxyfile-path:
+                description: "Path of the Doxyfile relative to the working directory."
+                required: false
+                type: string
+                default: "./Doxyfile"
+            enable-latex:
+                description: "Flag to enable making of the LaTeX part of the doxygen output."
+                required: false
+                type: boolean
+                default: false
+            additional-packages:
+                description: "Additional Alpine packages to install in the environment (i.e. font packages)."
+                required: false
+                type: string
+                default: ""
+        secrets:
+            TOKEN:
+                required: true
+            DEPLOYSSHSECRET:
+                required: true
+
+jobs:
+
+  docs:
+    runs-on: ubuntu-20.04
+
+    steps:
+        - name: Install Packages
+          if: inputs.packages-to-install != ''
+          run: |
+              sudo apt install -y ${{ inputs.packages-to-install }}
+
+        - name: Setup SSH Key
+          uses: webfactory/ssh-agent@v0.5.4
+          with:
+              ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }} 
+
+        - name: Clone Repo 
+          uses: actions/checkout@v3
+
+        - name: Generate Documentation
+          uses: mattnotmitt/doxygen-action@v1.9.5
+          with:
+              working-directory: ${{ inputs.working-directory }}
+              doxyfile-path: ${{ inputs.doxyfile-path }}
+              additional-packages: ${{ inputs.additional-packages }}
+
+        - name: Pages Deployment
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+              github_token: ${{ secrets.TOKEN }}
+              publish_dir: ${{ inputs.working-directory }}/html
+              force_orphan: true
