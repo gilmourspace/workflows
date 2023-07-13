@@ -29,6 +29,11 @@ on:
                 required: false
                 type: string
                 default: "arm-none-eabi-gcc"
+            boards:
+                description: "The boards to build the project for."
+                required: false
+                type: string
+                default: "ALL_BOARDS"
 
 jobs:
 
@@ -41,3 +46,4 @@ jobs:
           embedded-cross-framework-ref: ${{ inputs.embedded-cross-framework-ref }}
           embedded-cross-framework-repository: ${{ inputs.embedded-cross-framework-repository }}
           cmake-preset: ${{ inputs.cmake-preset }}
+          boards: ${{ inputs.boards }}

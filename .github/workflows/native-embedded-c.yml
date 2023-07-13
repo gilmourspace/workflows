@@ -28,6 +28,11 @@ on:
                 required: false
                 type: string
                 default: "arm-none-eabi-gcc"
+            boards:
+                description: "The boards to build the project for."
+                required: false
+                type: string
+                default: "ALL_BOARDS"
 
 defaults:
     run:
@@ -57,5 +62,5 @@ jobs:
 
       - name: Build Debug
         run: |
-            cmake --preset "${{ inputs.cmake-preset }}-debug" -DPROJECTS="${{ github.event.repository.name }}"
+            cmake --preset "${{ inputs.cmake-preset }}-debug" -DPROJECTS="${{ github.event.repository.name }}" -DBOARDS="${{ inputs.boards }}"
             cmake --build --preset "${{ inputs.cmake-preset }}-debug"
