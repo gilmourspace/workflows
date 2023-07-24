@@ -17,6 +17,7 @@ jobs:
 
   cppcheck:
     strategy:
+        fail-fast: false
         matrix:
             os: ${{ fromJson(inputs.runs-on) }}
     runs-on: ${{ matrix.os }}
