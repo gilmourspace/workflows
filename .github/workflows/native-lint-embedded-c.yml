@@ -18,7 +18,7 @@ jobs:
   cppcheck:
     strategy:
         matrix:
-            os: ${{ inputs.runs-on }}
+            os: ${{ fromJson(inputs.runs-on) }}
     runs-on: ${{ matrix.os }}
     steps:
 
