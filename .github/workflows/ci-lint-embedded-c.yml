@@ -7,7 +7,7 @@ on:
                 description: "The tag that specifies which runner to execute this workflow on."
                 required: false
                 type: string
-                default: "cross-arm-none-eabi"
+                default: "macOS,Linux"
 
 jobs:
 
