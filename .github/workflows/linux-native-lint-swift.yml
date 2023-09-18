@@ -1,0 +1,52 @@
+name: Linux Native Lint
+
+on:
+    workflow_call:
+
+defaults:
+    run:
+        shell: bash -ileo pipefail {0}
+
+jobs:
+
+  swiftlint:
+    runs-on: linux-amd64
+
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
+
+      - name: Swiftlint
+        run: |
+            swiftlint lint --strict
+
+  swiftformat:
+    runs-on: linux-amd64
+
+    steps:
+
+      - name: Delete Everything
+        run: rm -rf *
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Clear Cache
+        run: |
+            swift package purge-cache || true
+            swift package reset
+            swift package clean
+
+      - name: Swift Format
+        run: |
+          swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests
