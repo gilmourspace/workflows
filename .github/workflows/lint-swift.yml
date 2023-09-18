@@ -22,5 +22,5 @@ on:
 jobs:
 
   lint:
-      uses: ./.github/workflows/macOS-native-lint-swift.yml
+      uses: ./.github/workflows/linux-native-lint-swift.yml
       secrets: inherit
