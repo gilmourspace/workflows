@@ -28,7 +28,7 @@ jobs:
 
       - name: Swiftlint
         run: |
-            swiftlint lint --strict
+            swiftlint lint --strict --no-cache
 
   swiftformat:
     runs-on: linux-amd64

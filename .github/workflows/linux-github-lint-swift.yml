@@ -35,7 +35,7 @@ jobs:
             - name: SwiftLint
               uses: norio-nomura/action-swiftlint@3.2.1
               with:
-                  args: --strict
+                  args: --strict --no-cache
 
     swiftformat:
         runs-on: ubuntu-20.04
