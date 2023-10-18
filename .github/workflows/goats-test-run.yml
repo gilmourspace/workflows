@@ -32,7 +32,6 @@ jobs:
 
             - name: Install GOATS CLI
               run: |
-                rm goats
                 ar vx goats-cli.deb
                 tar xvf data.tar.zst
                 mv ./usr/local/bin/goats .
