@@ -10,7 +10,7 @@ jobs:
     container:
       image: ghcr.io/gilmourspace/gspaceenv:latest
       credentials:
-        username: ${{ secets.WORKFLOW_USERNAME }}
+        username: ${{ secrets.WORKFLOW_USERNAME }}
         password: ${{ secrets.WORKFLOW_PAT }}
     steps:
 #     - name: Checkout Repository
