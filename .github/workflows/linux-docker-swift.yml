@@ -1,0 +1,32 @@
+name: Ubuntu 20.04 Swift Docker
+on:
+    workflow_call:
+
+jobs:
+  debug:
+    runs-on: [linux, gsapce]
+    container: swift:latest
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Debug Build
+        run: swift build -c debug
+
+      - name: Debug Test
+        run: swift test
+
+  release:
+    runs-on: [linux, gsapce]
+    container: swift:latest
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Release build
+        run: swift build -c release
+
+      - name: Release Test
+        run: swift test -c release
