@@ -4,7 +4,7 @@ on:
 
 jobs:
   debug:
-    runs-on: [linux, gsapce]
+    runs-on: [linux, gspace]
     container: swift:latest
     steps:
 
@@ -18,7 +18,7 @@ jobs:
         run: swift test
 
   release:
-    runs-on: [linux, gsapce]
+    runs-on: [linux, gspace]
     container: swift:latest
     steps:
 
