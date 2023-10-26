@@ -10,8 +10,8 @@ jobs:
     container:
       image: ghcr.io/gilmourspace/gspaceenv:latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     - name: Checkout Repository
+#       uses: actions/checkout@v3
       - name: Run SwiftLint
         run: swiftlint lint --strict --no-cache
 
@@ -20,7 +20,7 @@ jobs:
     container:
       image: ghcr.io/gilmourspace/gspaceenv:latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     - name: Checkout Repository
+#       uses: actions/checkout@v3
       - name: Run SwiftLint
         run: swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests 
