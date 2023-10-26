@@ -11,7 +11,7 @@ jobs:
       image: ghcr.io/gilmourspace/gspaceenv:latest
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
-        password: ${{ secrets.CONTAINER_PAT }}
+        password: ${{ secrets.WORKFLOW_PAT }}
     steps:
 #     - name: Checkout Repository
 #       uses: actions/checkout@v3
@@ -24,7 +24,7 @@ jobs:
       image: ghcr.io/gilmourspace/gspaceenv:latest
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
-        password: ${{ secrets.CONTAINER_PAT }}
+        password: ${{ secrets.WORKFLOW_PAT }}
     steps:
 #     - name: Checkout Repository
 #       uses: actions/checkout@v3
