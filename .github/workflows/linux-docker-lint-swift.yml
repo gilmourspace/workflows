@@ -9,6 +9,9 @@ jobs:
     runs-on: [linux, gspace]
     container:
       image: ghcr.io/gilmourspace/gspaceenv:latest
+      credentials:
+        username: ${{ secets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.WORKFLOW_PAT }}
     steps:
 #     - name: Checkout Repository
 #       uses: actions/checkout@v3
@@ -19,6 +22,9 @@ jobs:
     runs-on: [linux, gspace]
     container:
       image: ghcr.io/gilmourspace/gspaceenv:latest
+      credentials:
+        username: ${{ secets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.WORKFLOW_PAT }}
     steps:
 #     - name: Checkout Repository
 #       uses: actions/checkout@v3
