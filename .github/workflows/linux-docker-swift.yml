@@ -5,7 +5,11 @@ on:
 jobs:
   debug:
     runs-on: [linux, gspace]
-    container: swift:latest
+    container:
+      image: ghcr.io/gilmourspace/gspaceenv:latest
+      credentials:
+        username: ${{ secrets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.CONTAINER_PAT }} 
     steps:
 
       - name: Checkout Repository
@@ -19,7 +23,12 @@ jobs:
 
   release:
     runs-on: [linux, gspace]
-    container: swift:latest
+    container: 
+      image: ghcr.io/gilmourspace/gspaceenv:latest
+      credentials:
+        username: ${{ secrets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.CONTAINER_PAT }} 
+    steps:
     steps:
 
       - name: Checkout Repository
