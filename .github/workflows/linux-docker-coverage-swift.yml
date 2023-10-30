@@ -28,19 +28,4 @@ jobs:
         - name: Coverage Test
           id: cov
           run: |
-            output=`swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json || true`
-            echo "$output"
-            cov=`echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g' || true`
-            echo "codecov=$cov" >> $GITHUB_OUTPUT
-            check=`printf "%.0f" "$cov"`
-            [ "$check" = ${{ inputs.minimum-coverage }} ]
-
-        - name: Post Positive Result
-          if: ${{ success() }}
-          run: |
-            echo "::warning file=Package.swift,line=1,col=1::The current code coverage percentage is passing with ${{ steps.cov.outputs.codecov }}% (minimum allowed: ${{ inputs.minimum-coverage }}%)."
-
-        - name: Post Negative Result
-          if: ${{ failure() }}
-          run: |
-            echo "::error file=Package.swift,line=1,col=1::The current code coverage percentage is failing with ${{ steps.cov.outputs.codecov }}% (minimum allowed: ${{ inputs.minimum-coverage }}%)."
+            swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json || true
