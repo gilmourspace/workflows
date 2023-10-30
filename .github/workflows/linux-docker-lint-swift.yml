@@ -8,7 +8,7 @@ jobs:
   swiftlint:
     runs-on: [linux, gspace]
     container:
-      image: ghcr.io/gilmourspace/gspaceenv:latest
+      image: ghcr.io/gilmourspace/gspaceenv:main
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
         password: ${{ secrets.CONTAINER_PAT }}
@@ -21,7 +21,7 @@ jobs:
   swift-format:
     runs-on: [linux, gspace]
     container:
-      image: ghcr.io/gilmourspace/gspaceenv:latest
+      image: ghcr.io/gilmourspace/gspaceenv:main
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
         password: ${{ secrets.CONTAINER_PAT }}
@@ -29,4 +29,4 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Run SwiftFormat
-        run: swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests 
+        run: swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests

@@ -6,10 +6,10 @@ jobs:
   debug:
     runs-on: [linux, gspace]
     container:
-      image: ghcr.io/gilmourspace/gspaceenv:latest
+      image: ghcr.io/gilmourspace/gspaceenv:main
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
-        password: ${{ secrets.CONTAINER_PAT }} 
+        password: ${{ secrets.CONTAINER_PAT }}
     steps:
 
       - name: Checkout Repository
@@ -23,11 +23,11 @@ jobs:
 
   release:
     runs-on: [linux, gspace]
-    container: 
-      image: ghcr.io/gilmourspace/gspaceenv:latest
+    container:
+      image: ghcr.io/gilmourspace/gspaceenv:main
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
-        password: ${{ secrets.CONTAINER_PAT }} 
+        password: ${{ secrets.CONTAINER_PAT }}
     steps:
 
       - name: Checkout Repository
