@@ -8,7 +8,7 @@ jobs:
   swiftlint:
     runs-on: [linux, gspace]
     container:
-      image: ghcr.io/gilmourspace/gspaceenv:main
+      image: ghcr.io/gilmourspace/gspaceenv:0
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
         password: ${{ secrets.CONTAINER_PAT }}
@@ -16,12 +16,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Run SwiftLint
-        run: swiftlint lint --strict --no-cache
+        run: |
+          echo $(swiftlint lint --strict --no-cache) >> $GITHUB_STEP_SUMMARY
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
 
   swift-format:
     runs-on: [linux, gspace]
     container:
-      image: ghcr.io/gilmourspace/gspaceenv:main
+      image: ghcr.io/gilmourspace/gspaceenv:0
       credentials:
         username: ${{ secrets.WORKFLOW_USERNAME }}
         password: ${{ secrets.CONTAINER_PAT }}
@@ -29,4 +33,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Run SwiftFormat
-        run: swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests
+        run: |
+          echo $(swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests) >> $GITHUB_STEP_SUMMARY
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
