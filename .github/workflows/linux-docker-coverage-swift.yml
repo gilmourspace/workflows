@@ -33,7 +33,7 @@ jobs:
             cov=`echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g' || true`
             echo "codecov=$cov" >> $GITHUB_OUTPUT
             check=`printf "%.0f" "$cov"`
-            [[ "$check" -ge ${{ inputs.minimum-coverage }} ]]
+            [ "$check" = ${{ inputs.minimum-coverage }} ]
 
         - name: Post Positive Result
           if: ${{ success() }}
