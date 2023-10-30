@@ -16,11 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Run SwiftLint
-        run: |
-          echo $(swiftlint lint --strict --no-cache) >> $GITHUB_STEP_SUMMARY
-          if [ $? -ne 0 ]; then
-            exit 1
-          fi
+        run: swiftlint lint --strict --no-cache
 
   swift-format:
     runs-on: [linux, gspace]
@@ -33,5 +29,4 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Run SwiftFormat
-        run: |
-          swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests
+        run: swift-format lint -rs --ignore-unparsable-files --configuration .swiftformat.json Sources Tests
