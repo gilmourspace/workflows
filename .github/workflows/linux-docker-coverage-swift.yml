@@ -28,4 +28,4 @@ jobs:
         - name: Coverage Test
           id: cov
           run: |
-            swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json || true
+            swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json
