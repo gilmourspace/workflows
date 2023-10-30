@@ -28,13 +28,4 @@ jobs:
         - name: Coverage Test
           id: cov
           run: |
-            OUTPUT=$(swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json)
-            echo $OUTPUT >> $GITHUB_STEP_SUMMARY
-            if [ $? -eq 0 ]; then
-              COV=$(echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g')
-              echo "**Coverage test passed: $COV**" >> $GITHUB_STEP_SUMMARY
-            else
-              COV=$(echo "$output" | grep ":" | head | cut -d":" -f2 | sed 's/^ //' | sed 's/%//g')
-              echo "**Coverage test failed: $COV**" >> $GITHUB_STEP_SUMMARY
-              exit 1
-            fi
+            swift-test-codecov --minimum=${{ inputs.minimum-coverage }} --no-dependencies --no-tests -p table --exclude-path Tests .build/debug/codecov/*.json
