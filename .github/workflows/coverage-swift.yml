@@ -20,5 +20,5 @@ on:
 jobs:
 
   coverage:
-      uses: ./.github/workflows/linux-native-coverage-swift.yml
+      uses: ./.github/workflows/linux-docker-coverage-swift.yml
       secrets: inherit

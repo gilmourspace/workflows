@@ -6,7 +6,7 @@ on:
 jobs:
 
   swiftlint:
-    runs-on: [linux, gspace]
+    runs-on: [docker]
     container:
       image: ghcr.io/gilmourspace/gspaceenv:0
       credentials:
@@ -19,7 +19,7 @@ jobs:
         run: swiftlint lint --strict --no-cache
 
   swift-format:
-    runs-on: [linux, gspace]
+    runs-on: [docker]
     container:
       image: ghcr.io/gilmourspace/gspaceenv:0
       credentials:
