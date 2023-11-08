@@ -8,6 +8,11 @@ on:
                 required: false
                 type: string
                 default: "5.6.3"
+            package-repository:
+                description: "The package repository to add before running the workflow."
+                required: false
+                type: string
+                default: ""
             packages-to-install:
                 description: "A list of packages to install before running the workflow."
                 required: false
@@ -25,5 +30,6 @@ jobs:
       uses: ./.github/workflows/linux-github-docs-swift.yml
       with:
           swift-version: ${{ inputs.swift-version }}
+          package-repository: ${{ inputs.package-repository }}
           packages-to-install: ${{ inputs.packages-to-install }}
       secrets: inherit
