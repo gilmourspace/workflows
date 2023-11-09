@@ -44,7 +44,7 @@ jobs:
 
         - name: Setup Swift
           run: |
-            swiftenv install ${{ inputs.swift-version }}
+            swiftenv install ${{ inputs.swift-version }} || true
             swiftenv global ${{ inputs.swift-version }}
 
         - name: Run tests
