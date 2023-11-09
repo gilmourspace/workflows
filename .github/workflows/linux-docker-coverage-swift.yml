@@ -3,6 +3,16 @@ name: Swift Coverage Test
 on:
     workflow_call:
         inputs:
+            swift-version:
+              description: "The swift version to use to build and test the package."
+              required: false
+              type: string
+              default: "5.9.1"
+            packages-to-install:
+              description: "A list of packages to install before running the workflow."
+              required: false
+              type: string
+              default: ""
             minimum-coverage:
                 description: The minumum code coverage that the package should test.
                 required: false
@@ -26,6 +36,16 @@ jobs:
           uses: webfactory/ssh-agent@v0.5.4
           with:
             ssh-private-key: ${{ secrets.DEPLOYSSHSECRET }}
+
+        - name: Install Packages
+          if: inputs.packages-to-install != ''
+          run: |
+            sudo apt install -y ${{ inputs.packages-to-install }}
+
+        - name: Setup Swift
+          run: |
+            swiftly install ${{ inputs.swift-version }}
+            swiftly use ${{ inputs.swift-version }}
 
         - name: Run tests
           run: swift test --enable-code-coverage

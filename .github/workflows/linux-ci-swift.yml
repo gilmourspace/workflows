@@ -7,7 +7,7 @@ on:
                 description: "The swift version to use to build and test the package."
                 required: false
                 type: string
-                default: "5.6.3"
+                default: "5.9.1"
             packages-to-install:
                 description: "A list of packages to install before running the workflow."
                 required: false
@@ -19,6 +19,9 @@ on:
 
 jobs:
 
-  ci:
-      uses: ./.github/workflows/linux-docker-swift.yml
-      secrets: inherit
+    ci:
+        uses: ./.github/workflows/linux-docker-swift.yml
+        with:
+            swift-version: ${{ github.event.inputs.swift-version }}
+            packages-to-install: ${{ github.event.inputs.packages-to-install }}
+        secrets: inherit
