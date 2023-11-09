@@ -19,8 +19,12 @@ on:
 jobs:
 
     run-goats-test:
-        runs-on:
-            group: gspace
+        runs-on: [gspace, docker]
+        container:
+          image: ghcr.io/gilmourspace/gspaceenv:0
+          credentials:
+            username: ${{ secrets.WORKFLOW_USERNAME }}
+            password: ${{ secrets.CONTAINER_PAT }}
         steps:
             - name: Fetch GOATS CLI
               uses: dsaltares/fetch-gh-release-asset@master
