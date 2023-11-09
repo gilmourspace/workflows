@@ -27,6 +27,7 @@ jobs:
   coverage:
         uses: ./.github/workflows/linux-docker-coverage-swift.yml
         with:
-            swift-version: ${{ github.event.inputs.swift-version }}
-            minimum-coverage: ${{ github.event.inputs.minimum-coverage }}
+            swift-version: ${{ inputs.swift-version }}
+            packages-to-install: ${{ inputs.packages-to-install }}
+            minimum-coverage: ${{ inputs.minimum-coverage }}
         secrets: inherit
