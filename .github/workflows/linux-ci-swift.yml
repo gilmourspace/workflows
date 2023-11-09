@@ -22,6 +22,6 @@ jobs:
     ci:
         uses: ./.github/workflows/linux-docker-swift.yml
         with:
-            swift-version: ${{ github.event.inputs.swift-version }}
-            packages-to-install: ${{ github.event.inputs.packages-to-install }}
+            swift-version: ${{ inputs.swift-version }}
+            packages-to-install: ${{ inputs.packages-to-install }}
         secrets: inherit
