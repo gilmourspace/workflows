@@ -38,8 +38,8 @@ jobs:
 
       - name: Setup Swift
         run: |
-          swiftly install ${{ inputs.swift-version }}
-          swiftly use ${{ inputs.swift-version }}
+          swiftenv install ${{ inputs.swift-version }}
+          swiftenv global ${{ inputs.swift-version }}
 
       - name: Debug Build
         run: swift build -c debug
@@ -71,8 +71,8 @@ jobs:
 
       - name: Setup Swift
         run: |
-          swiftly install ${{ inputs.swift-version }}
-          swiftly use ${{ inputs.swift-version }}
+          swiftenv install ${{ inputs.swift-version }}
+          swiftenv global ${{ inputs.swift-version }}
 
       - name: Release build
         run: swift build -c release
