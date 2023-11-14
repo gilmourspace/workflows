@@ -1,0 +1,24 @@
+name: Embedded C Docker Lint
+
+on:
+    workflow_call:
+
+jobs:
+
+  cppcheck:
+    runs-on: [docker]
+    container:
+      image: ghcr.io/gilmourspace/gspaceenv:0
+      credentials:
+        username: ${{ secrets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.CONTAINER_PAT }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+            submodules: 'recursive'
+
+      - name: Lint
+        run: |
+            mkdir cfg-cppcheck-build-dir
+            cppcheck --project=cfg.cppcheck --error-exitcode=2 --enable=warning --enable=style --enable=performance --enable=portability --inline-suppr
