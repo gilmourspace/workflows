@@ -12,7 +12,5 @@ on:
 jobs:
 
   ci:
-      uses: ./.github/workflows/native-lint-embedded-c.yml
+      uses: ./.github/workflows/linux-docker-lint-embedded-c.yml
       secrets: inherit
-      with:
-          runs-on: ${{ inputs.runs-on }}
