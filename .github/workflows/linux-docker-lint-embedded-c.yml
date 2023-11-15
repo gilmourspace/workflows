@@ -19,4 +19,4 @@ jobs:
       - name: Lint
         run: |
             mkdir cfg-cppcheck-build-dir
-            cppcheck --project=cfg.cppcheck --enable=warning --enable=style --enable=performance --enable=portability --inline-suppr
+            cppcheck --project=cfg.cppcheck --enable=warning --enable=style --enable=performance --enable=portability --inline-suppr  --error-exitcode=1
