@@ -34,6 +34,7 @@ jobs:
       - name: Install Packages
         if: inputs.packages-to-install != ''
         run: |
+          apt-get -q update
           apt-get install -y ${{ inputs.packages-to-install }}
 
       - name: Setup Swift
@@ -67,6 +68,7 @@ jobs:
       - name: Install Packages
         if: inputs.packages-to-install != ''
         run: |
+          apt-get -q update
           apt-get install -y ${{ inputs.packages-to-install }}
 
       - name: Setup Swift
