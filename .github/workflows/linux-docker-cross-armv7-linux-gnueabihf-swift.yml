@@ -1,0 +1,34 @@
+name: Swift Cross Compilation on Docker
+
+on:
+  workflow_call:
+    inputs:
+      artifact-path:
+        description: 'Path to the artifact to upload'
+        type: string
+        required: true
+        default: '.build/armv7-unknown-linux-gnueabihf/debug/${{ github.event.repository.name }}PackageTests.xctest'
+
+jobs:
+
+  exec-cross:
+    runs-on: [docker]
+    container:
+      image: ghcr.io/gilmourspace/cross-armv7-linux-gnueabihf:0
+      credentials:
+        username: ${{ secrets.WORKFLOW_USERNAME }}
+        password: ${{ secrets.CONTAINER_PAT }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+            PKG_CONFIG_PATH="/usr/local/armv7-unknown-linux-gnueabihf/staging/lib/pkgconfig:${PKG_CONFIG_PATH}" swift build --build-tests --destination /usr/local/armv7-unknown-linux-gnueabihf/destination.json
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ inputs.artifact-path }}
+          retention-days: 1
